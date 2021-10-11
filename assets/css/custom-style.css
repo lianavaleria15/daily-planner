@@ -1,0 +1,34 @@
+:root {
+  --midnight-green-eagle-green: #1a535cff;
+  --medium-turquoise: #4ecdc4ff;
+  --mint-cream: #f7fff7ff;
+  --bittersweet: #ff6b6bff;
+  --naples-yellow: #ffe66dff;
+}
+.row {
+  border: 1px groove var(--midnight-green-eagle-green);
+  border-radius: 15px;
+  text-align: center;
+  margin: 5px;
+}
+
+.time-item,
+.save-item {
+  border-radius: 15px;
+  background-color: var(--mint-cream);
+}
+
+.time-item {
+  background-color: var(--mint-cream);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.activity-item {
+  background-color: var(--medium-turquoise);
+}
+
+.save-item {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
