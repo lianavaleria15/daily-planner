@@ -16,8 +16,9 @@ const constructTimeBlocks = (businessHours) => {
     const timeBlockDiv = `<div class="row">
     <div class="col time-item">${element}</div>
     <div class="col-8 activity-item">Activity here</div>
-    <div class="col save-item"><i class="fas fa-save"></i></div>
+    <div  class="col save-item"><i class="fas fa-save"></i></div>
   </div>`;
+
     return timeBlockDiv;
   };
   return businessHours.map(timeBlock).join("");
@@ -29,7 +30,29 @@ const renderTimeBlocks = () => {
   $(".container").append(timeBlocks);
 };
 
-//on window load
-window.onload = () => {
+//function to add activities to local storage
+// const addActivityToLocalStorage = () => {
+//   console.log("save");
+// };
+
+//add event listener on save item
+// $(".save-item").on(
+//   "click",
+//   (addActivityToLocalStorage = () => {
+//     console.log("save");
+//   })
+// );
+
+$(document).ready(() => {
   renderTimeBlocks();
-};
+  $(".save-item").on(
+    "click",
+    (addActivityToLocalStorage = () => {
+      console.log("save");
+    })
+  );
+});
+//on window load
+// window.onload = () => {
+//   renderTimeBlocks();
+// };
