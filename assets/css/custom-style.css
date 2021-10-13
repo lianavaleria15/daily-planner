@@ -24,10 +24,16 @@
   border-bottom-right-radius: 0;
 }
 
-.activity-item {
-  background-color: var(--medium-turquoise);
+.past {
+  background-color: var(--bittersweet);
 }
 
+.present {
+  background-color: var(--bittersweet);
+}
+.future {
+  background-color: var(--medium-turquoise);
+}
 .save-item {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
