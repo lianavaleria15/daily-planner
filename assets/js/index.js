@@ -23,10 +23,18 @@ const businessHours = [
 //build time blocks
 const constructTimeBlocks = (businessHours) => {
   const timeBlock = (element) => {
+    //get current time
+    const currentTime = moment().hour();
+
+    //get time for each time block
+    const timeEachTimeBlock = element.id;
+    console.log(timeEachTimeBlock);
+
+    //build each time block row
     const timeBlockDiv = `<div class="row">
     <div class="col time-item">${element.hour}</div>
-    <div class="col-8 past"><textarea class="textarea"></textarea></div>
-    <div  class="col save-item"><i class="fas fa-save"></i></div>
+    <div class="col-8 past"><textarea id=${element.id}>${element.activityText}</textarea></div>
+    <div id="save-item" data-attribute ="${element.id}"class="col"><i class="fas fa-save"></i></div>
   </div>`;
     return timeBlockDiv;
   };
@@ -37,20 +45,7 @@ const constructTimeBlocks = (businessHours) => {
 // render time blocks
 const renderTimeBlocks = () => {
   const timeBlocks = constructTimeBlocks(businessHours);
-
   $(".container").append(timeBlocks);
-  const callback = function () {
-    console.log(this);
-    console.log($(".time-item"));
-    if ($(this).is(".time-item")) {
-      const timeBlockHour = $(".time-item").text();
-      console.log(timeBlockHour);
-    }
-    // if (element === moment().format("HH")) {
-    // } else if (element > moment().format("HH")) {
-    // }
-  };
-  $(".row").each(callback);
 };
 
 //function to add text to text area
