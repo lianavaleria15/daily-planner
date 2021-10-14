@@ -29,7 +29,11 @@ const constructTimeBlocks = (businessHours) => {
     //get time for each time block
     const timeEachTimeBlock = element.id;
     console.log(timeEachTimeBlock);
-
+    if (timeEachTimeBlock === currentTime) {
+      console.log("works");
+    } else if (timeEachTimeBlock > currentTime) {
+      console.log("future");
+    }
     //build each time block row
     const timeBlockDiv = `<div class="row">
     <div class="col time-item">${element.hour}</div>
