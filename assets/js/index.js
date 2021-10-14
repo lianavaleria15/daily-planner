@@ -20,26 +20,50 @@ const businessHours = [
   { id: 17, hour: "5 AM", activityText: "" },
 ];
 
+//initialize local storage
+const initializeLocalStorage = (businessHours) => {
+  //get activities from LS; if none added, return the business hours array
+  const activitiesScheduled =
+    JSON.parse(localStorage.getItem("activities")) || businessHours;
+
+  //set activities to LS
+  localStorage.setItem("activities", JSON.stringify(activitiesScheduled));
+
+  return activitiesScheduled;
+};
+
+const getClassName = (id) => {
+  //get current time
+  const currentTime = moment().hour();
+  // const currentTime = 14;
+  if (id < currentTime) {
+    return "past";
+  }
+  if (id === currentTime) {
+    return "present";
+  }
+  if (id > currentTime) {
+    return "future";
+  }
+};
+
 //build time blocks
 const constructTimeBlocks = (businessHours) => {
   const timeBlock = (element) => {
-    //get current time
-    const currentTime = moment().hour();
-
     //get time for each time block
-    const timeEachTimeBlock = element.id;
-    console.log(timeEachTimeBlock);
-    if (timeEachTimeBlock === currentTime) {
-      console.log("works");
-    } else if (timeEachTimeBlock > currentTime) {
-      console.log("future");
-    }
+    const id = element.id;
+
     //build each time block row
     const timeBlockDiv = `<div class="row">
     <div class="col time-item">${element.hour}</div>
-    <div class="col-8 past"><textarea id=${element.id}>${element.activityText}</textarea></div>
-    <div id="save-item" data-attribute ="${element.id}"class="col"><i class="fas fa-save"></i></div>
+    <div class="col-8 ${getClassName(id)}"><textarea id=${
+      element.id
+    }></textarea></div>
+    <div class="save-item" data-attribute ="${
+      element.id
+    }" class="col"><i class="fas fa-save"></i></div>
   </div>`;
+
     return timeBlockDiv;
   };
 
@@ -58,13 +82,15 @@ const addActivityText = () => {
   return activityText;
 };
 
-//function to add activities to local storage
-const addActivityToLocalStorage = () => {};
-
-//function to get from local storage
-
-$(document).ready(() => {
+const onReady = () => {
+  // initializeLocalStorage();
   renderTimeBlocks();
+
+  //function to add activities to local storage
+  const addActivityToLocalStorage = () => {};
+
   //add event listener on save item
-  $(".save-item").on("click", addActivityToLocalStorage());
-});
+  $(".container").on("click", addActivityToLocalStorage());
+};
+
+$(document).ready(onReady);
