@@ -24,7 +24,7 @@ const businessHours = [
 const initializeLocalStorage = (businessHours) => {
   //get activities from LS; if none added, return the business hours array
   const activitiesScheduled =
-    JSON.parse(localStorage.getItem("activities")) || businessHours;
+    JSON.parse(localStorage.getItem("activities")) ?? businessHours;
 
   //set activities to LS
   localStorage.setItem("activities", JSON.stringify(activitiesScheduled));
@@ -56,10 +56,10 @@ const constructTimeBlocks = (businessHours) => {
     //build each time block row
     const timeBlockDiv = `<div class="row">
     <div class="col time-item">${element.hour}</div>
-    <div class="col-8 ${getClassName(id)}"><textarea id=${
+    <div class="col-8 ${getClassName(id)} activity-container"><textarea id=${
       element.id
     }></textarea></div>
-    <div class="save-item" data-attribute ="${
+    <div class="save-item" data-timeid="${
       element.id
     }" class="col"><i class="fas fa-save"></i></div>
   </div>`;
@@ -83,14 +83,29 @@ const addActivityText = () => {
 };
 
 const onReady = () => {
-  // initializeLocalStorage();
+  initializeLocalStorage(businessHours);
   renderTimeBlocks();
 
   //function to add activities to local storage
-  const addActivityToLocalStorage = () => {};
+  const addActivityToLocalStorage = (event) => {
+    //get current target
+    const target = $(event.target).closest(".save-item")[0];
+
+    //get textarea for time activity id
+    if (target) {
+      //get time activity id
+      const timeId = $(target).data("timeid");
+
+      //get value of textarea
+      const activity = $(target).siblings(".activity-container");
+      const activityText = activity.find("textarea").val();
+
+      //add to local storage
+    }
+  };
 
   //add event listener on save item
-  $(".container").on("click", addActivityToLocalStorage());
+  $(".container").on("click", addActivityToLocalStorage);
 };
 
 $(document).ready(onReady);
