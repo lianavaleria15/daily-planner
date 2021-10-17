@@ -9,15 +9,15 @@ dateContainer.text(today);
 
 //get business hours and store them into an array
 const businessHours = [
-  { id: 9, hour: "9 AM", activityText: "" },
-  { id: 10, hour: "10 AM", activityText: "" },
-  { id: 11, hour: "11 AM", activityText: "" },
-  { id: 12, hour: "12 AM", activityText: "" },
-  { id: 13, hour: "1 PM", activityText: "" },
-  { id: 14, hour: "2 PM", activityText: "" },
-  { id: 15, hour: "3 AM", activityText: "" },
-  { id: 16, hour: "4 AM", activityText: "" },
-  { id: 17, hour: "5 AM", activityText: "" },
+  { id: 9, hour: "9 AM", activity: "" },
+  { id: 10, hour: "10 AM", activity: "" },
+  { id: 11, hour: "11 AM", activity: "" },
+  { id: 12, hour: "12 AM", activity: "" },
+  { id: 13, hour: "1 PM", activity: "" },
+  { id: 14, hour: "2 PM", activity: "" },
+  { id: 15, hour: "3 AM", activity: "" },
+  { id: 16, hour: "4 AM", activity: "" },
+  { id: 17, hour: "5 AM", activity: "" },
 ];
 
 //initialize local storage
@@ -48,26 +48,26 @@ const getClassName = (id) => {
 };
 
 //build time blocks
-const constructTimeBlocks = (businessHours) => {
+const constructTimeBlocks = (activitiesScheduled) => {
   const timeBlock = (element) => {
     //get time for each time block
     const id = element.id;
 
     //build each time block row
     const timeBlockDiv = `<div class="row">
-    <div class="col time-item">${element.hour}</div>
+    <div class="col-2 time-item">${element.hour}</div>
     <div class="col-8 ${getClassName(id)} activity-container"><textarea id=${
       element.id
     }></textarea></div>
-    <div class="save-item" data-timeid="${
+    <div class=" col-2 save-item py-3" data-timeid="${
       element.id
-    }" class="col"><i class="fas fa-save"></i></div>
+    }"><i class="fas fa-save"></i></div>
   </div>`;
 
     return timeBlockDiv;
   };
 
-  return businessHours.map(timeBlock).join("");
+  return activitiesScheduled.map(timeBlock).join("");
 };
 
 // render time blocks
@@ -84,13 +84,12 @@ const addActivityText = () => {
 
 const onReady = () => {
   initializeLocalStorage(businessHours);
-  renderTimeBlocks();
+  renderTimeBlocks(initializeLocalStorage(businessHours));
 
   //function to add activities to local storage
   const addActivityToLocalStorage = (event) => {
     //get current target
     const target = $(event.target).closest(".save-item")[0];
-
     //get textarea for time activity id
     if (target) {
       //get time activity id
@@ -100,7 +99,16 @@ const onReady = () => {
       const activity = $(target).siblings(".activity-container");
       const activityText = activity.find("textarea").val();
 
+      // get activities values  from LS
+      const activityLocalStorage = JSON.parse(
+        localStorage.getItem("activities")
+      );
+
+      activityLocalStorage[timeId - 9].activity = activityText;
+
+      console.log(activityLocalStorage[timeId - 9].activity);
       //add to local storage
+      localStorage.setItem("activities", JSON.stringify(activityLocalStorage));
     }
   };
 
