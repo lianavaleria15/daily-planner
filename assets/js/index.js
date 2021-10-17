@@ -34,7 +34,8 @@ const initializeLocalStorage = (businessHours) => {
 
 const getClassName = (id) => {
   //get current time
-  const currentTime = moment().hour();
+  // const currentTime = moment().hour();
+  const currentTime = 12;
 
   //update textarea container color on each row depending on time
   if (id < currentTime) {
