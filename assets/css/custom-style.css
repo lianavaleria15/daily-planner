@@ -15,11 +15,11 @@
 .time-item,
 .save-item {
   border-radius: 15px;
-  background-color: var(--mint-cream);
+  background-color: var(--naples-yellow);
 }
 
 .time-item {
-  background-color: var(--mint-cream);
+  background-color: var(--naples-yellow);
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }

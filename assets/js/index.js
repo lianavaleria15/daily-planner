@@ -34,8 +34,8 @@ const initializeLocalStorage = (businessHours) => {
 
 const getClassName = (id) => {
   //get current time
-  const currentTime = moment().hour();
-  // const currentTime = 14;
+  // const currentTime = moment().hour();
+  const currentTime = 14;
   if (id < currentTime) {
     return "past";
   }
@@ -58,7 +58,7 @@ const constructTimeBlocks = (activitiesScheduled) => {
     <div class="col-2 time-item">${element.hour}</div>
     <div class="col-8 ${getClassName(id)} activity-container"><textarea id=${
       element.id
-    }></textarea></div>
+    }>${element.activity}</textarea></div>
     <div class=" col-2 save-item py-3" data-timeid="${
       element.id
     }"><i class="fas fa-save"></i></div>
@@ -71,8 +71,8 @@ const constructTimeBlocks = (activitiesScheduled) => {
 };
 
 // render time blocks
-const renderTimeBlocks = () => {
-  const timeBlocks = constructTimeBlocks(businessHours);
+const renderTimeBlocks = (activitiesScheduled) => {
+  const timeBlocks = constructTimeBlocks(activitiesScheduled);
   $(".container").append(timeBlocks);
 };
 
@@ -86,19 +86,20 @@ const onReady = () => {
   initializeLocalStorage(businessHours);
   renderTimeBlocks(initializeLocalStorage(businessHours));
 
-  //function to add activities to local storage
+  //callback function for event on icon click
   const addActivityToLocalStorage = (event) => {
-    //get current target
+    //get position button clicked
     const target = $(event.target).closest(".save-item")[0];
-    //get textarea for time activity id
+
+    //get time activity id
+    const timeId = $(target).data("timeid");
+
+    //get value of textarea
+    const activity = $(target).siblings(".activity-container");
+    const activityText = activity.find("textarea").val();
+
+    //if target is a button
     if (target) {
-      //get time activity id
-      const timeId = $(target).data("timeid");
-
-      //get value of textarea
-      const activity = $(target).siblings(".activity-container");
-      const activityText = activity.find("textarea").val();
-
       // get activities values  from LS
       const activityLocalStorage = JSON.parse(
         localStorage.getItem("activities")
@@ -106,8 +107,7 @@ const onReady = () => {
 
       activityLocalStorage[timeId - 9].activity = activityText;
 
-      console.log(activityLocalStorage[timeId - 9].activity);
-      //add to local storage
+      // //add to local storage
       localStorage.setItem("activities", JSON.stringify(activityLocalStorage));
     }
   };
