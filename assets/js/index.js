@@ -34,8 +34,9 @@ const initializeLocalStorage = (businessHours) => {
 
 const getClassName = (id) => {
   //get current time
-  // const currentTime = moment().hour();
-  const currentTime = 14;
+  const currentTime = moment().hour();
+
+  //update textarea container color on each row depending on time
   if (id < currentTime) {
     return "past";
   }
@@ -54,7 +55,7 @@ const constructTimeBlocks = (activitiesScheduled) => {
     const id = element.id;
 
     //build each time block row
-    const timeBlockDiv = `<div class="row">
+    const timeBlockDiv = `<div class="row d-flex sm-flex-column">
     <div class="col-2 time-item">${element.hour}</div>
     <div class="col-8 ${getClassName(id)} activity-container"><textarea id=${
       element.id

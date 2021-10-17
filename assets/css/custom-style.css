@@ -5,6 +5,7 @@
   --bittersweet: #ff6b6bff;
   --naples-yellow: #ffe66dff;
 }
+
 .row {
   border: 1px groove var(--midnight-green-eagle-green);
   border-radius: 15px;
@@ -31,10 +32,15 @@
 .present {
   background-color: var(--bittersweet);
 }
+
 .future {
   background-color: var(--medium-turquoise);
 }
+
 .save-item {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+}
+
+@media screen and (max-width: 576px) {
 }
